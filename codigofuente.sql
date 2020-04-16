@@ -39,16 +39,10 @@ persona2 VARCHAR(20),
 cod_persona2 INT,
 ubicacion VARCHAR(50) NOT NULL,
 fecha DATETIME NOT NULL,
-resultado SET("Bien", "Mal"))
-/*CONSTRAINT FK_ASISTENTE1 FOREIGN KEY (persona1, cod_persona1) REFERENCES usuarios (nombre, cod_usuario)*/
-
+resultado SET("Bien", "Mal"),
+PRIMARY KEY (persona1, cod_persona1),
+CONSTRAINT FK_ASISTENTE1 FOREIGN KEY (persona1, cod_persona1) REFERENCES usuarios (nombre, cod_usuario))
+ENGINE=InnoDB;
 /*CONSTRAINT FK_ASISTENTE2 FOREIGN KEY (persona2, cod_persona2) REFERENCES usuarios (nombre, cod_usuario))*/
-ENGINE=InnoDB;
-/*TODO:No estoy muy segura, ¿esto funciona?*/
-CREATE TABLE IF NOT EXISTS participaciones(
-cod_usuario INT,
-nombre VARCHAR(20),
-cod_cita INT,
-CONSTRAINT FK_CODIGO_USER FOREIGN KEY (cod_usuario, nombre) REFERENCES usuarios (cod_usuario, nombre) ON UPDATE CASCADE ON DELETE CASCADE,
-CONSTRAINT FK_CODIGO_CITA FOREIGN KEY (cod_cita) REFERENCES citas (cod_cita)ON UPDATE CASCADE ON DELETE CASCADE)
-ENGINE=InnoDB;
+
+/*TODO:No estoy muy segura, ¿esto funciona? Esto no funciona, lo confirmamos*/

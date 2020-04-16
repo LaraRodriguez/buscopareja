@@ -6,21 +6,21 @@ use Buscopareja;
 /*Change databaseeeee*/
 /*---------------------------------------------------------------------------------------------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS usuarios(
-cod_usuario INT AUTO_INCREMENT, 
-nombre VARCHAR(20), 
-apellido1 VARCHAR(20) NOT NULL,
-apellido2 VARCHAR(20) NOT NULL,
-edad INT NOT NULL,
-sexo ENUM("Mujer", "Hombre", "No binario") NOT NULL,
-orientacion ENUM("Heterosexual", "Homosexual", "Bisexual", "Asexual") NOT NULL,
-pais VARCHAR(30) NOT NULL,
-ciudad VARCHAR(30) NOT NULL,
+cod_usuario INT AUTO_INCREMENT, /*vamoh a veh, esto es lo que marca a la persona, así que tiene que quedarse autoincrementable, tambien es PRIMARY KEY*/
+nombre VARCHAR(20),             /*bueno, esto no se si deberia ser PRIMARY KEY, xq ya está el codigo...*/
+apellido1 VARCHAR(20) NOT NULL, /*esto me la suda*/
+apellido2 VARCHAR(20) NOT NULL, /*esto tambien, ¿a quien le importa el segundo apellido?*/
+edad INT NOT NULL,              /*esto no se si cambiarlo por la fecha de nacimiento... TODO: cambiar por DATE*/
+sexo ENUM("Mujer", "Hombre", "No binario") NOT NULL,    /*TODO: pongo mas o lo dejo así?*/
+orientacion ENUM("Heterosexual", "Homosexual", "Bisexual", "Asexual") NOT NULL, /*TODO: mas temas peliagudos, no quiero que me ataque la gente*/
+pais VARCHAR(30) NOT NULL,      /*esto que no falte, pero tampoco es muy importante*/
+ciudad VARCHAR(30) NOT NULL,    /*lo mismo*/
 calle VARCHAR(30),
 numero INT,
 email VARCHAR(50) NOT NULL,
 contrasena VARCHAR(16) NOT NULL,
 foto VARCHAR(10),
-PRIMARY KEY(cod_usuario, nombre))
+PRIMARY KEY(cod_usuario, nombre)) /*mmm, sigo con la duda existencial... TODO: probar a ver si funciona solo con cod_usuario*/
 ENGINE=InnoDB;
 /*Tabla usuarios*/
 /*----------------------------------------------------------------------------------------------------------------------------------------*/
@@ -36,17 +36,16 @@ ENGINE=InnoDB;
 /*DON'TTTTTTT TOUUUUUUUCH*/
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
 CREATE TABLE IF NOT EXISTS citas(
-cod_cita INT AUTO_INCREMENT PRIMARY KEY,
-persona1 VARCHAR(20),
+cod_cita INT AUTO_INCREMENT PRIMARY KEY, /*esto deberia funcionar xq el otro funciona, PORQUE NO FUNCIONA???!!!*/
+persona1 VARCHAR(20),                    /*a ver, en teoria habria que sacar los datos de la tabla usuarios... TODO: poner solo el codigo*/
 cod_persona1 INT,
 persona2 VARCHAR(20),
 cod_persona2 INT,
-ubicacion VARCHAR(50) NOT NULL,
+ubicacion VARCHAR(50) NOT NULL,         
 fecha DATETIME NOT NULL,
-resultado SET("Bien", "Mal"),
-PRIMARY KEY (persona1, cod_persona1),
-CONSTRAINT FK_ASISTENTE1 FOREIGN KEY (persona1, cod_persona1) REFERENCES usuarios (nombre, cod_usuario))
+resultado SET("Bien", "Mal"),   /*he cambiado esto para que solo sean los codigos, por si luego sigue sin funcionar*/
+CONSTRAINT FK_USUARIO1 FOREIGN KEY (cod_persona1) REFERENCES usuarios (cod_usuario) ON UPDATE CASCADE ON DELETE CASCADE,
+CONSTRAINT FK_USUARIO2 FOREIGN KEY (cod_persona2) REFERENCES usuarios (cod_usuario) ON UPDATE CASCADE ON DELETE CASCADE)
 ENGINE=InnoDB;
-/*CONSTRAINT FK_ASISTENTE2 FOREIGN KEY (persona2, cod_persona2) REFERENCES usuarios (nombre, cod_usuario))*/
 /*TODO:No estoy muy segura, ¿esto funciona? Esto no funciona, lo confirmamos*/
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
